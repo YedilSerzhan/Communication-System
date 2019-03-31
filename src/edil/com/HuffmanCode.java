@@ -34,7 +34,7 @@ class HuffmanNode extends HuffmanTree {
 	}
 }
 
-public class HuffmanCode  {
+public class HuffmanCode {
 	private static final int ASCII_LENGTH = 7;
 
 	public String originalString;
@@ -60,9 +60,10 @@ public class HuffmanCode  {
 		huffmanTrees = new PriorityQueue<HuffmanTree>();
 		probabilityIsGiven = false;
 
-
+		this.calculateFrequency();
 		this.buildTree();
 		this.buildString(mainTree, new StringBuffer(), compressedResult);
+
 	}
 
 	public HuffmanCode(String str, HashMap<Character, Double> probablity) {
@@ -90,6 +91,7 @@ public class HuffmanCode  {
 
 		this.buildTree();
 		this.buildString(mainTree, new StringBuffer(), compressedResult);
+
 	}
 
 	private void buildTree() {
@@ -128,6 +130,18 @@ public class HuffmanCode  {
 			prefix.deleteCharAt(prefix.length() - 1);
 		}
 	}
+
+	private void calculateFrequency() {
+		for (Character c : originalString.toCharArray()) {
+			if (characterFrequency.containsKey(c)) {
+				characterFrequency.put(c, new Double(characterFrequency.get(c) + 1.0));
+			} else {
+				characterFrequency.put(c, 1.0);
+			}
+		}
+	}
+
+
 
 	@SuppressWarnings("unchecked")
 	public HashMap<Character, Double> getCharacterFrequency() {
