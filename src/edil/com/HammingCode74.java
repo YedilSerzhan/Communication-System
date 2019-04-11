@@ -1,5 +1,7 @@
 package edil.com;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class HammingCode74 {
 
     String original;
@@ -38,6 +40,30 @@ public class HammingCode74 {
         for(int i=0; i< blockNum * 4; i = i + 4){
 
             encoded += encodeBlock(s.substring(i,i+4)) ;
+
+        }
+
+        encoded += lastSubString;
+        return encoded;
+    }
+
+    String addErrors(String s){
+
+
+        String encoded = "";
+        int n = s.length();
+        int blockNum = n /7;
+        String lastSubString = s.substring(blockNum * 7);
+        for(int i=0; i< blockNum * 7; i = i + 7){
+            String subString = s.substring(i,i+7);
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
+            char bit = '0';
+            if(if_is_one(subString.charAt(randomNum)) == 0)
+                bit = '1';
+
+
+            encoded = encoded + subString.substring(0,randomNum)+bit+subString.substring(randomNum + 1);
+
 
         }
 

@@ -95,8 +95,11 @@ public class Part1 {
         System.out.println("Huffman Decoded: "+ huffmanCode.decoding(resultString));
 
         HammingCode74 hammingCode74 = new HammingCode74();
+        String hammingCodedString = hammingCode74.encodeString(resultString);
 
+        System.out.println("Hamming Encoded: "+ hammingCodedString);
+        String erroredString = hammingCode74.addErrors(hammingCodedString);
+        System.out.println("Errored String:  "+ erroredString);
 
-        System.out.println("Hamming Encoded: "+ hammingCode74.encodeString(resultString));
     }
 }
