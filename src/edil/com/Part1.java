@@ -89,17 +89,19 @@ public class Part1 {
         resultString = resultStringBuilder.toString();
 
         System.out.println("Huffman Encoded: "+resultString);
-
-
-
         System.out.println("Huffman Decoded: "+ huffmanCode.decoding(resultString));
+        HammingCode74 hammingCode74 = new HammingCode74(resultString);
+        String hammingCodedString = hammingCode74.getEncoded();
+        String corectedString = hammingCode74.getCorrectedCode();
+        String erroredString = hammingCode74.getEncodedWithErrors();
+        String decodedString = hammingCode74.getDecoded();
 
-        HammingCode74 hammingCode74 = new HammingCode74();
-        String hammingCodedString = hammingCode74.encodeString(resultString);
 
-        System.out.println("Hamming Encoded: "+ hammingCodedString);
-        String erroredString = hammingCode74.addErrors(hammingCodedString);
-        System.out.println("Errored String:  "+ erroredString);
+        System.out.println("Hamming Encoded: "+ hammingCodedString.replaceAll(".......", "$0 "));
+        System.out.println("Errored String:  "+ erroredString.replaceAll(".......", "$0 "));
+        System.out.println("Corrected Str:   "+ corectedString.replaceAll(".......", "$0 "));
+        System.out.println("Decoded String:  "+ decodedString);
+
 
     }
 }
