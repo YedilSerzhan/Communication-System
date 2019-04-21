@@ -11,6 +11,7 @@ public class HammingCode74 {
     private String decoded;
     private int originalLength;
     private int encodedLength;
+    private int addtionalLenth;
 
 
     public HammingCode74(String s) {
@@ -19,40 +20,13 @@ public class HammingCode74 {
         encoded = "";
         encodedWithErrors = "";
         correctedCode = "";
+        addtionalLenth = 0;
         decoded ="";
         encodeString();
         encodedLength = encoded.length();
         addErrors();
         correctCoding();
         decodeString();
-    }
-
-    public String getEncodedWithErrors() {
-        return encodedWithErrors;
-    }
-
-    public String getOriginal() {
-        return original;
-    }
-
-    public String getEncoded() {
-        return encoded;
-    }
-
-    public int getOriginalLength() {
-        return originalLength;
-    }
-
-    public int getEncodedLength() {
-        return encodedLength;
-    }
-
-    public String getCorrectedCode() {
-        return correctedCode;
-    }
-
-    public String getDecoded() {
-        return decoded;
     }
 
     private String encodeBlock(String s){
@@ -74,21 +48,29 @@ public class HammingCode74 {
     private void encodeString(){
 
         int blockNum = originalLength /4;
-        String lastSubString = original.substring(blockNum * 4);
+        if(originalLength % 4 != 0){
+            addtionalLenth = 4 - originalLength % 4;
+            StringBuilder stringBuilder = new StringBuilder(original);
+            int i = addtionalLenth;
+            while(i > 0){
+                stringBuilder.append('0') ;
+                i--;
+            }
+            original = stringBuilder.toString();
+            blockNum += 1;
+        }
+
         for(int i=0; i< blockNum * 4; i = i + 4){
 
             this.encoded += encodeBlock(original.substring(i,i+4)) ;
 
         }
-
-        this.encoded += lastSubString;
-
     }
 
     private void addErrors(){
 
         int blockNum = encodedLength /7;
-        String lastSubString = encoded.substring(blockNum * 7);
+
         for(int i=0; i< blockNum * 7; i = i + 7){
             String subString = encoded.substring(i,i+7);
             int randomNum = ThreadLocalRandom.current().nextInt(0, 7);
@@ -102,7 +84,6 @@ public class HammingCode74 {
 
         }
 
-        encodedWithErrors += lastSubString;
 
     }
 
@@ -118,14 +99,14 @@ public class HammingCode74 {
     private void correctCoding(){
 
         int blockNum = encodedLength /7;
-        String lastSubString = encoded.substring(blockNum * 7);
+
         for(int i=0; i< blockNum * 7; i = i + 7){
 
             correctedCode = correctedCode + correctBlock(encodedWithErrors.substring(i,i+7)) ;
 
         }
 
-        correctedCode += lastSubString;
+
 
     }
 
@@ -183,7 +164,6 @@ public class HammingCode74 {
     private void decodeString(){
 
         int blockNum = encodedLength /7;
-        String lastSubString = encoded.substring(blockNum * 7);
         for(int i=0; i< blockNum * 7; i = i + 7){
 
             String subString = correctedCode.substring(i,i+7);
@@ -192,8 +172,36 @@ public class HammingCode74 {
 
         }
 
-        decoded += lastSubString;
+       decoded = decoded.substring(0,originalLength);
     }
 
 
+
+    public String getEncodedWithErrors() {
+        return encodedWithErrors;
+    }
+
+    public String getOriginal() {
+        return original;
+    }
+
+    public String getEncoded() {
+        return encoded;
+    }
+
+    public int getOriginalLength() {
+        return originalLength;
+    }
+
+    public int getEncodedLength() {
+        return encodedLength;
+    }
+
+    public String getCorrectedCode() {
+        return correctedCode;
+    }
+
+    public String getDecoded() {
+        return decoded;
+    }
 }

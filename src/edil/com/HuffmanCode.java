@@ -43,7 +43,6 @@ public class HuffmanCode {
 	private HashMap<Character, String> compressedResult;
 	private HashMap<String, Character> decodingTable;
 	private HashMap<Character, Double> characterFrequency;
-
 	private PriorityQueue<HuffmanTree> huffmanTrees;
 	HuffmanTree mainTree;
 
@@ -92,7 +91,6 @@ public class HuffmanCode {
 	}
 
 
-
 	private void buildTree() {
 
 		//add all alphabtes to the tree
@@ -115,7 +113,7 @@ public class HuffmanCode {
 			huffmanTrees.offer(new HuffmanNode(a, b));
 		}
 
-		//get two last nodes
+		//get the last nodes
 		mainTree = huffmanTrees.poll();
 	}
 
@@ -147,8 +145,6 @@ public class HuffmanCode {
 			prefix.deleteCharAt(prefix.length() - 1);
 		}
 	}
-
-
 
 	private void calculateFrequency() {
 		for (Character c : originalString.toCharArray()) {
@@ -195,7 +191,6 @@ public class HuffmanCode {
 		return decoded;
 	}
 
-
     public HashMap<String, Character> getDecodingTable() {
         return decodingTable;
     }
@@ -203,7 +198,6 @@ public class HuffmanCode {
     public void setDecodingTable(HashMap<String, Character> decodingTable) {
         this.decodingTable = decodingTable;
     }
-
 
     @SuppressWarnings("unchecked")
 	public HashMap<Character, Double> getCharacterFrequency() {
